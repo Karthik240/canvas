@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera and Canvas API</title>
+</head>
+<body>
+  <h1>Camera and Canvas API</h1>
+  <video id="video" width="320" height="240" autoplay></video>
+  <button id="snap">Snap</button>
+  <canvas id="canvas" width="320" height="240"></canvas>
+
+  <script>
+    // Access the video and canvas elements
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const snapButton = document.getElementById('snap');
+
+    // Access the user's webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((err) => {
+        console.error("Error accessing webcam:", err);
+      });
+
+    // Add a click event to the Snap button
+    snapButton.addEventListener('click', () => {
+      // Draw the current video frame on the canvas
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    });
+  </script>
+</body>
+</html>
